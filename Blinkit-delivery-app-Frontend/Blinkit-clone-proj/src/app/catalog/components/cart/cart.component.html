@@ -1,0 +1,40 @@
+<div class="cart-layout">
+  <h2>Shopping Cart</h2>
+  <div class="cart-container-wrapper">
+    <div class="cart-container">
+      <div class="cart-card" *ngFor="let cartItem of populatedCartItems">
+        <div class="cart-image">
+          <img
+            [src]="cartItem.product.imageURL"
+            alt="{{ cartItem.product.productName }}"
+          />
+        </div>
+        <div class="cart-info">
+          <h3>{{ cartItem.product.productName }}</h3>
+          <div class="cart-description">{{ cartItem.product.description }}</div>
+          <div class="cart-price">
+            {{ cartItem.product.price | currency: "INR" : "symbol" : "1.0-0" }}
+          </div>
+          <button
+            *ngIf="cartItem.quantity === 0"
+            (click)="addToCart(cartItem.product)"
+          >
+            Add to Cart
+          </button>
+          <div *ngIf="cartItem.quantity > 0">
+            <button (click)="decreaseQuantity(cartItem.product)">-</button>
+            <span>&nbsp;&nbsp;{{ cartItem.quantity }}&nbsp;&nbsp;</span>
+            <button (click)="increaseQuantity(cartItem.product)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <h3>
+        Total Price: {{ totalPrice | currency: "INR" : "symbol" : "1.0-0" }}
+      </h3>
+      <button (click)="checkout()">Checkout</button>
+    </div>
+  </div>
+</div>
+

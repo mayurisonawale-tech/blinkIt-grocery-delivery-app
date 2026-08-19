@@ -1,0 +1,88 @@
+
+<div class="add-category-container">
+ 
+    <div class="add-category-form-container">
+        <form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="categoryName">Category Name</label>
+            <input  name="categoryName" type="text" formControlName="categoryName" class="form-control" placeholder="Enter Category Name">
+            <div *ngIf="addCategoryForm.get('categoryName')?.invalid && addCategoryForm.get('categoryName')?.touched"class="error" >
+                Category name is required.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryDescription">Category Description</label>
+            <input  name="categoryDescription" type="text" formControlName="categoryDescription" class="form-control" placeholder="Enter Category Description">
+            <div *ngIf="addCategoryForm.get('categoryDescription')?.invalid && addCategoryForm.get('categoryDescription')?.touched"class="error">
+                Category description is required.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryImage">Category Image URL</label>
+            <input  name="categoryImage" type="text" formControlName="categoryImage" class="form-control" placeholder="Enter Category Image URL">
+            <div *ngIf="addCategoryForm.get('categoryImage')?.invalid && addCategoryForm.get('categoryImage')?.touched"class="error">
+                Category image URL is required.
+            </div>
+        </div>
+        <button type="submit" class="submit-button" [disabled]="addCategoryForm.invalid">Add Category</button>
+        </form>
+    </div>
+
+    <div class="add-category-list-container">
+        <div class="categories-list">
+            <ul>
+                <li *ngFor="let category of categories" (click)="handleNavigateToProductList(category)">
+                    <img [src]="category.ImageURL" alt="{{category.categoryImage}}" class="category-image">
+                    <div class="Category-details">
+                        <div class="category-name">
+                            <strong>{{category.categoryName}}</strong>
+                        </div>
+                        <div class="category-description">
+                            {{category.Description}}
+                        </div>
+                        <button class="edit-category-btn" (click)="handleEditCategory(category,editCategoryTemplate,$event)">Edit</button>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- edit form that will popup when we click on edit -->
+<ng-template #editCategoryTemplate>
+    <div class="edit-category-form-container">
+        <div class="edit-category-header">
+            <h3>Edit Category</h3>
+            <button class="close-button" (click)="modalRef?.hide()">X</button>
+        </div>
+        <form [formGroup]="editCategoryForm" (ngSubmit)="onEditSubmit">
+            <div class="form-group">
+                <label for="editCategoryName">Category Name</label>
+                <input id="editCategoryName" formControlName="categoryName" type="text" class="form-control" placeholder="Enter category name">
+                <div *ngIf="editCategoryForm.get('categoryName')?.invalid && editCategoryForm.get('categoryName')?.touched" class="error">
+                    Category name is required.
+                </div>
+            </div>
+        
+            <div class="form-group">
+                <label for="editCategoryDescription">Category Description</label>
+                <textarea id="editCategoryDescription" formControlName="categoryDescription" class="form-control" placeholder="Enter category description"></textarea>
+                <div *ngIf="editCategoryForm.get('categoryDescription')?.invalid && editCategoryForm.get('categoryDescription')?.touched" class="error">
+                    Category description is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="editCategoryImage">Category Image URL</label>
+                <input id="editCategoryImage" formControlName="categoryImage" type="text" class="form-control" placeholder="Enter category image URL">
+                <div *ngIf="editCategoryForm.get('categoryImage')?.invalid && editCategoryForm.get('categoryImage')?.touched" class="error">
+                    Category image URL is required.
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button" [disabled]="editCategoryForm.invalid" (click)="onEditSubmit()">Update Category</button>
+        </form>
+    </div>
+
+</ng-template>

@@ -1,0 +1,102 @@
+<div class="add-product-container">
+    <button class="go-back-button" (click)="gobackToCategories()">Go Back</button>
+    <div class="add-product-form-container">
+        <form [formGroup]="addProductForm" (ngSubmit)="HandleAddProduct()">
+            <div class="form-group">
+            <label for="productName"></label>
+            <input id="productName" name="productName" formControlName="productName" type="text" class="formControl" placeholder="Enter Product Name">
+            <div *ngIf="addProductForm.get('productName')?.invalid && addProductForm.get('productName')?.touched" class="error">
+                Product name is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="productDescription"></label>
+            <input id="productDescription" name="productDescription" formControlName="productDescription" type="text" class="formControl" placeholder="Enter Product Description">
+            <div *ngIf="addProductForm.get('productDescription')?.invalid && addProductForm.get('productDescription')?.touched" class="error">
+                Product description is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="productImage"></label>
+            <input id="productImage" name="productImage" formControlName="productImage" type="text" class="formControl" placeholder="Enter Product Image">
+            <div *ngIf="addProductForm.get('productImage')?.invalid && addProductForm.get('productImage')?.touched" class="error">
+                Product image URL is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="productPrice"></label>
+            <input id="productPrice" name="productPrice" formControlName="productPrice" type="text" class="formControl" placeholder="Enter Product price">
+            <div *ngIf="addProductForm.get('productPrice')?.invalid && addProductForm.get('productPrice')?.touched" class="error">
+                 Product price is required and must be a valid number.
+            </div>
+            </div>
+            <button type="submit" class="submit-button" [disabled]="addProductForm.invalid">Add Product</button>
+        </form>
+    </div>
+    <div class="product-list-container" >
+        <!-- here we are printing category name to see if we are adding product in correct category -->
+      <h2>Products for Category: {{ categoryName }}</h2> 
+      <div *ngIf="allProducts.length > 0; else noProducts">
+          <ul>
+            <li *ngFor="let product of allProducts">
+                <img [src]="product.imageURL" alt="{{product.productName}}">
+                <div class="product-info">
+                    <h3>{{ product.productName }}</h3>
+                        <p>{{ product.description }}</p>
+                        <p>Price: {{ product.price | currency: 'INR' }}</p>
+                </div>
+                    <button class="edit-proudct-btn" (click)="handleProductEdit(product, editProductTemplate)">Edit</button>
+            </li>
+          </ul>
+
+      </div>
+      <ng-template #noProducts>
+            <p>No products available for this category.</p>
+        </ng-template>
+
+    </div>
+</div>
+
+<ng-template #editProductTemplate>
+    <div class="edit-product-form-container">
+        <div class="edit-product-header">
+            <h3>Edit product</h3>
+            <button class="close-button" (click)="modalRef?.hide()">X</button>
+        </div>
+        <form [formGroup]="editProductForm" (ngSubmit)="ProductEditSubmit()">
+            <div class="form-group">
+            <label for="editProductName"></label>
+            <input id="editProductName" name="productName" formControlName="productName" type="text" class="formControl" placeholder="Enter Product Name">
+            <div *ngIf="editProductForm.get('productName')?.invalid && editProductForm.get('productName')?.touched" class="error">
+                Product name is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="productDescription"></label>
+            <input id="editProductDescription" name="productDescription" formControlName="productDescription" type="text" class="formControl" placeholder="Enter Product Description">
+            <div *ngIf="editProductForm.get('productDescription')?.invalid && editProductForm.get('productDescription')?.touched" class="error">
+                Product description is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="editProductImage"></label>
+            <input id="editProductImage" name="productImage" formControlName="productImage" type="text" class="formControl" placeholder="Enter Product Image">
+            <div *ngIf="editProductForm.get('productImage')?.invalid && editProductForm.get('productImage')?.touched" class="error">
+                Product image URL is required.
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="editProductPrice"></label>
+            <input id="editProductPrice" name="productPrice" formControlName="productPrice" type="text" class="formControl" placeholder="Enter Product price">
+            <div *ngIf="editProductForm.get('productPrice')?.invalid && editProductForm.get('productPrice')?.touched" class="error">
+                 Product price is required and must be a valid number.
+            </div>
+            </div>
+            <button type="submit" class="submit-button" [disabled]="editProductForm.invalid">Edit Product</button>
+        </form>
+   
+
+
+    </div>
+
+</ng-template>

@@ -1,0 +1,20 @@
+<h2>{{categoryName}}</h2>
+
+<div class="products-container">
+  <div class="product-card" *ngFor="let product of modifiedProducts">
+    <img [src]="product.imageURL" alt="{{ product.productName }}">
+    <div class="product-info">
+      <h3>{{ product.productName }}</h3>
+      <div class="product-description">{{ product.description }}</div>
+      <div class="product-price">{{ product.price | currency:'INR':'symbol':'1.0-0' }}</div>
+      <button *ngIf="product.quantity === 0" (click)="addToCart(product)">Add to Cart</button>
+      <div *ngIf="product.quantity > 0">
+        <button (click)="decreaseQuantity(product)">-</button>
+        <span>&nbsp;&nbsp;{{ product.quantity }}&nbsp;&nbsp;</span>
+        <button (click)="increaseQuantity(product)">+</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+

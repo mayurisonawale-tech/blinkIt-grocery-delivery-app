@@ -1,0 +1,16 @@
+<div class="main-header">
+    <div class="header-left-section">
+        <div class="header-logo">LOGO</div>
+        <div class="header-search-bar">
+            <input type="text" placeholder="Search..." />
+        </div>
+    </div>
+    <div class="header-right-section">
+        <div *ngIf="showAdminLogin" class="nav-item admin-login" routerLinkActive="highlight" routerLink="/admin/login">Admin Login</div>
+        <div *ngIf="showAdminLogout" class="nav-item admin-logout" (click)="handleAdminLogout()">Admin Logout</div>
+        <div *ngIf="showUserLogin" class="nav-item login" routerLinkActive="highlight" routerLink="/user/login">Login</div>
+        <div *ngIf="showUserRegister" class="nav-item register" routerLinkActive="highlight" routerLink="/user/register">Register</div>
+        <div *ngIf="showCartIcon" class="nav-item cart" routerLink="/catalog/cart">Cart</div>
+        <div *ngIf="showUserLogout" class="nav-item user-logout" (click)="handleUserLogout()">Logout</div>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+.add-category-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .add-category-form-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        align-items: center;
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 600px;
+
+            input, textarea{
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            button{
+                padding: 10px;
+                background-color: #28a745;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: #218838;
+                }
+            }
+        }
+    }
+
+    .add-category-list-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+        h3{
+            margin-bottom: 10px;
+        }
+
+        .categories-list{
+            ul{
+                list-style-type: none;
+                padding: 0;
+
+                li{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 10px;
+                    border-bottom: 1px solid #ccc;
+                    cursor: pointer;
+
+                    .category-image{
+                        width: 100px;
+                        height: 100px;
+                        object-fit: cover;
+                        border-radius: 5px;
+                    }
+
+                    .category-details{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content:flex-start;
+                        height: 100px;
+
+                        .category-name{
+                            font-weight: bold;
+                        }
+
+                        .category-description{
+                            color: #666;
+                        }
+
+                        .edit-category-btn{
+                            padding: 5px 10px;
+                            background-color: #28a745;
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+
+                            &:hover{
+                                background-color: #218838;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.edit-category-form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: center;
+
+    .edit-category-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+        padding: 10px;
+
+        h3{
+            margin: 0;
+        }
+
+        .close-button{
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+
+            &:hover{
+                color: red;
+            }
+        }
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+
+        input, textarea{
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button{
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover{
+                background-color: #218838;
+            }
+        }
+    }
+}
