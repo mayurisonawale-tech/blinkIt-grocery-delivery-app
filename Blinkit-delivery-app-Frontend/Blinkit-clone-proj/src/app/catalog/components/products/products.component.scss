@@ -1,62 +1,160 @@
-.products-container{
+:host {
+  display: block;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+/* Category name heading, rendered as a bare <h2> in the template. */
+:host > h2 {
+  margin: 0 0 22px;
+  font-size: clamp(1.45rem, 3.4vw, 2rem);
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+
+  .product-card {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px;
+    flex-direction: column;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-align: left;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 
-    .product-card{
-        width: 300px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        overflow: hidden;
-        text-align: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-
-        &:hover{
-            transform: translateY(-5px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        img{
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .product-info{
-            padding: 10px;
-
-            h3{
-                margin: 10px 0;
-                font-size: 18px;
-                color: #333;
-            }
-
-            .product-description{
-                font-size: 14px;
-                color: #666;
-            }
-
-            .product-price{
-                font-size: 16px;
-                color: #000;
-                margin: 10px 0;
-            }
-
-            button{
-                background-color: #06b300;
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-
-                &:hover{
-                    background-color: #05a000;
-                }
-            }
-        }
+    &:hover {
+      transform: translateY(-4px);
+      border-color: var(--c-green-bright);
+      box-shadow: var(--shadow);
     }
+
+    img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      background: var(--c-surface-alt);
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      /* Pushes the action row to the bottom so buttons line up across
+         cards with different amounts of text. */
+      flex: 1;
+      padding: 15px 15px 17px;
+
+      h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+
+      .product-description {
+        font-size: 0.87rem;
+        color: var(--c-muted);
+      }
+
+      .product-price {
+        margin: 2px 0 10px;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--c-green-deep);
+      }
+
+      button {
+        background: var(--c-green);
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+
+        &:hover { background: var(--c-green-deep); }
+      }
+
+      /* The quantity stepper is an unclassed <div> holding - qty + */
+      > div:not(.product-description):not(.product-price) {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        align-self: flex-start;
+        gap: 4px;
+        padding: 4px;
+        background: var(--c-green-tint);
+        border-radius: 999px;
+
+        button {
+          width: 32px;
+          height: 32px;
+          padding: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.1rem;
+          line-height: 1;
+        }
+
+        span {
+          min-width: 30px;
+          text-align: center;
+          font-weight: 700;
+          color: var(--c-green-deep);
+        }
+      }
+
+      /* Add to cart sits at the bottom edge of the card. */
+      > button {
+        margin-top: auto;
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  :host {
+    padding: 20px 14px 40px;
+  }
+
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+
+    .product-card {
+      img { height: 120px; }
+
+      .product-info {
+        padding: 12px 12px 14px;
+
+        h3 { font-size: 0.92rem; }
+        .product-description { font-size: 0.8rem; }
+        .product-price { font-size: 1rem; }
+
+        > button {
+          width: 100%;
+          align-self: stretch;
+          padding: 9px 12px;
+          font-size: 0.88rem;
+        }
+
+        > div:not(.product-description):not(.product-price) {
+          align-self: stretch;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
 }

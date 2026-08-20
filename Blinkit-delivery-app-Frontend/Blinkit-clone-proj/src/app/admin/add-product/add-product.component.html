@@ -3,28 +3,28 @@
     <div class="add-product-form-container">
         <form [formGroup]="addProductForm" (ngSubmit)="HandleAddProduct()">
             <div class="form-group">
-            <label for="productName"></label>
+            <label for="productName">Product name</label>
             <input id="productName" name="productName" formControlName="productName" type="text" class="formControl" placeholder="Enter Product Name">
             <div *ngIf="addProductForm.get('productName')?.invalid && addProductForm.get('productName')?.touched" class="error">
                 Product name is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="productDescription"></label>
+            <label for="productDescription">Description</label>
             <input id="productDescription" name="productDescription" formControlName="productDescription" type="text" class="formControl" placeholder="Enter Product Description">
             <div *ngIf="addProductForm.get('productDescription')?.invalid && addProductForm.get('productDescription')?.touched" class="error">
                 Product description is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="productImage"></label>
+            <label for="productImage">Image URL</label>
             <input id="productImage" name="productImage" formControlName="productImage" type="text" class="formControl" placeholder="Enter Product Image">
             <div *ngIf="addProductForm.get('productImage')?.invalid && addProductForm.get('productImage')?.touched" class="error">
                 Product image URL is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="productPrice"></label>
+            <label for="productPrice">Price</label>
             <input id="productPrice" name="productPrice" formControlName="productPrice" type="text" class="formControl" placeholder="Enter Product price">
             <div *ngIf="addProductForm.get('productPrice')?.invalid && addProductForm.get('productPrice')?.touched" class="error">
                  Product price is required and must be a valid number.
@@ -65,28 +65,28 @@
         </div>
         <form [formGroup]="editProductForm" (ngSubmit)="ProductEditSubmit()">
             <div class="form-group">
-            <label for="editProductName"></label>
+            <label for="editProductName">Product name</label>
             <input id="editProductName" name="productName" formControlName="productName" type="text" class="formControl" placeholder="Enter Product Name">
             <div *ngIf="editProductForm.get('productName')?.invalid && editProductForm.get('productName')?.touched" class="error">
                 Product name is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="productDescription"></label>
+            <label for="productDescription">Description</label>
             <input id="editProductDescription" name="productDescription" formControlName="productDescription" type="text" class="formControl" placeholder="Enter Product Description">
             <div *ngIf="editProductForm.get('productDescription')?.invalid && editProductForm.get('productDescription')?.touched" class="error">
                 Product description is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="editProductImage"></label>
+            <label for="editProductImage">Image URL</label>
             <input id="editProductImage" name="productImage" formControlName="productImage" type="text" class="formControl" placeholder="Enter Product Image">
             <div *ngIf="editProductForm.get('productImage')?.invalid && editProductForm.get('productImage')?.touched" class="error">
                 Product image URL is required.
             </div>
             </div>
             <div class="form-group">
-            <label for="editProductPrice"></label>
+            <label for="editProductPrice">Price</label>
             <input id="editProductPrice" name="productPrice" formControlName="productPrice" type="text" class="formControl" placeholder="Enter Product price">
             <div *ngIf="editProductForm.get('productPrice')?.invalid && editProductForm.get('productPrice')?.touched" class="error">
                  Product price is required and must be a valid number.

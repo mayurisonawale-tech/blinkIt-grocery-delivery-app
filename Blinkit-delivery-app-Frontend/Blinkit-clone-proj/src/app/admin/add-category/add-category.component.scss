@@ -1,169 +1,162 @@
-.add-category-container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* Field and button styling is global; this file lays out the two panels
+   and the edit dialog. */
 
-    .add-category-form-container{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        align-items: center;
-
-        form{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 600px;
-
-            input, textarea{
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-
-            button{
-                padding: 10px;
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-
-                &:hover{
-                    background-color: #218838;
-                }
-            }
-        }
-    }
-
-    .add-category-list-container{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-
-        h3{
-            margin-bottom: 10px;
-        }
-
-        .categories-list{
-            ul{
-                list-style-type: none;
-                padding: 0;
-
-                li{
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 10px;
-                    border-bottom: 1px solid #ccc;
-                    cursor: pointer;
-
-                    .category-image{
-                        width: 100px;
-                        height: 100px;
-                        object-fit: cover;
-                        border-radius: 5px;
-                    }
-
-                    .category-details{
-                        display: flex;
-                        flex-direction: column;
-                        justify-content:flex-start;
-                        height: 100px;
-
-                        .category-name{
-                            font-weight: bold;
-                        }
-
-                        .category-description{
-                            color: #666;
-                        }
-
-                        .edit-category-btn{
-                            padding: 5px 10px;
-                            background-color: #28a745;
-                            color: white;
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-
-                            &:hover{
-                                background-color: #218838;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+.add-category-container {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
 }
 
+.add-category-form-container {
+  position: sticky;
+  top: 20px;
+  padding: 24px 22px 26px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  border-top: 4px solid var(--c-yellow);
+  box-shadow: var(--shadow-sm);
 
-.edit-category-form-container{
+  form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    align-items: center;
+  }
 
-    .edit-category-header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 10px;
-        background-color: #f8f9fa;
-        padding: 10px;
+  .submit-button {
+    margin-top: 8px;
+  }
+}
 
-        h3{
-            margin: 0;
-        }
+.add-category-list-container {
+  min-width: 0;
 
-        .close-button{
-            background-color: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
+  .categories-list ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-            &:hover{
-                color: red;
-            }
-        }
-    }
+    li {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
 
-    form{
+      &:hover {
+        border-color: var(--c-green-bright);
+        box-shadow: var(--shadow);
+      }
+
+      .category-image {
+        width: 92px;
+        height: 78px;
+        object-fit: cover;
+        display: block;
+        border-radius: var(--radius-sm);
+        background: var(--c-surface-alt);
+      }
+
+      /* Capitalised class name is what the template uses. */
+      .Category-details {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        width: 90%;
+        gap: 3px;
+        min-width: 0;
 
-        input, textarea{
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .category-name {
+          font-size: 1rem;
+          text-transform: capitalize;
         }
 
-        button{
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-
-            &:hover{
-                background-color: #218838;
-            }
+        .category-description {
+          font-size: 0.87rem;
+          color: var(--c-muted);
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
+
+        .edit-category-btn {
+          align-self: flex-start;
+          margin-top: 6px;
+        }
+      }
     }
+  }
+}
+
+/* ---------------------------------------------------------- edit dialog */
+
+.edit-category-form-container {
+  padding: 20px 22px 24px;
+
+  .edit-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--c-border);
+
+    h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .submit-button {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .add-category-container {
+    grid-template-columns: 1fr;
+  }
+
+  .add-category-form-container {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .add-category-container {
+    padding: 20px 14px 40px;
+    gap: 18px;
+  }
+
+  .add-category-form-container {
+    padding: 20px 16px 22px;
+  }
+
+  .add-category-list-container .categories-list ul li {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 12px;
+
+    .category-image {
+      width: 72px;
+      height: 66px;
+    }
+  }
 }

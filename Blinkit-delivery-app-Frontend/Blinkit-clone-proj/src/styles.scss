@@ -1,5 +1,29 @@
-/* Global styles. Kept deliberately small - a base reset plus typography,
-   so component stylesheets start from a predictable baseline. */
+/* Global stylesheet: design tokens, a base reset, and the form/button
+   primitives that every feature component shares. Component stylesheets
+   handle layout on top of this. */
+
+:root {
+  --c-green-bright: #75e983;
+  --c-green:        #1f9d55;
+  --c-green-deep:   #12703b;
+  --c-green-tint:   #eaf9ee;
+  --c-yellow:       #ffc93c;
+  --c-ink:          #16181d;
+  --c-muted:        #5d6470;
+  --c-surface:      #ffffff;
+  --c-surface-alt:  #f4f8f5;
+  --c-border:       #e2e9e4;
+  --c-danger:       #c0392b;
+  --c-danger-tint:  #fdecea;
+
+  --radius:    14px;
+  --radius-sm: 9px;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 20, 0.05), 0 4px 12px rgba(16, 24, 20, 0.05);
+  --shadow:    0 2px 4px rgba(16, 24, 20, 0.04), 0 12px 28px rgba(16, 24, 20, 0.07);
+}
+
+/* ------------------------------------------------------------ reset */
 
 *,
 *::before,
@@ -16,9 +40,9 @@ body {
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #16181d;
-  background-color: #ffffff;
-  /* Long words and URLs should wrap rather than force a sideways scroll. */
+  color: var(--c-ink);
+  background-color: var(--c-surface-alt);
+  /* Long words and URLs wrap instead of forcing a sideways scroll. */
   overflow-wrap: break-word;
 }
 
@@ -37,4 +61,184 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------ forms
+
+   Every form in the app uses .form-group with .form-control or
+   .formControl inputs and a .error message, so styling them here fixes
+   all five forms at once. */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+
+  label {
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+
+  /* An empty label would otherwise leave a stray gap above the input. */
+  label:empty {
+    display: none;
+  }
+}
+
+.form-control,
+.formControl {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 0.97rem;
+  color: var(--c-ink);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: #9aa2ab;
+  }
+
+  &:focus {
+    border-color: var(--c-green-bright);
+    box-shadow: 0 0 0 3px rgba(117, 233, 131, 0.28);
+  }
+}
+
+textarea.form-control,
+textarea.formControl {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.error {
+  margin-top: 6px;
+  padding: 6px 10px;
+  font-size: 0.83rem;
+  color: var(--c-danger);
+  background: var(--c-danger-tint);
+  border-radius: 7px;
+}
+
+/* ------------------------------------------------------------ buttons
+
+   The app uses a different class name per button; grouping them keeps
+   one visual language without touching every template. */
+
+.submit-button,
+.login-button,
+.userlogin-button,
+.user-register-button {
+  padding: 12px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--c-green);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 6px 16px rgba(31, 157, 85, 0.24);
+
+  &:hover:not(:disabled) {
+    background: var(--c-green-deep);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: #c6cdc8;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.edit-category-btn,
+.edit-proudct-btn,
+.go-back-button {
+  padding: 7px 16px;
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: var(--c-green-deep);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-green-bright);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: var(--c-green-tint);
+  }
+}
+
+.close-button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c-muted);
+  background: var(--c-surface-alt);
+  border: 1px solid var(--c-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--c-danger-tint);
+    color: var(--c-danger);
+  }
+}
+
+/* ------------------------------------------------------------ modal
+
+   ngx-bootstrap ships behaviour but the project does not load Bootstrap's
+   CSS, so the modal shell is styled here. */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background-color: #000;
+
+  &.fade { opacity: 0; }
+  &.show,
+  &.in { opacity: 0.5; }
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  max-width: 560px;
+  margin: 1.75rem auto;
+  padding: 0 12px;
+}
+
+.modal-content {
+  background: var(--c-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.modal-open {
+  overflow: hidden;
 }
