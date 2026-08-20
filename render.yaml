@@ -1,7 +1,14 @@
-# Render blueprint for the Express API.
-# The frontend is deployed separately (see netlify.toml).
+# Render blueprint: deploys BOTH services from this one repo.
+#
+#   blinkit-clone-api       - Express API (web service, runs Node)
+#   blinkit-clone-frontend  - Angular SPA (static site, served from a CDN)
+#
+# Render > New > Blueprint, point it at this repo, and it creates both.
 
 services:
+  # ---------------------------------------------------------------
+  # Backend - Express + MongoDB
+  # ---------------------------------------------------------------
   - type: web
     name: blinkit-clone-api
     runtime: node
@@ -14,6 +21,26 @@ services:
       # Set these in the Render dashboard - never commit real values.
       - key: MONGODB_URI
         sync: false
-      # Your deployed frontend origin, e.g. https://blinkit-clone.netlify.app
+      # Your frontend's Render URL, e.g. https://blinkit-clone-frontend.onrender.com
       - key: CORS_ORIGIN
         sync: false
+
+  # ---------------------------------------------------------------
+  # Frontend - Angular static build
+  # ---------------------------------------------------------------
+  - type: web
+    name: blinkit-clone-frontend
+    runtime: static
+    rootDir: Blinkit-delivery-app-Frontend/Blinkit-clone-proj
+    buildCommand: npm ci && npm run build
+    # Relative to rootDir.
+    staticPublishPath: dist/blinkit-clone-proj
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+    routes:
+      # Angular is a single-page app: unmatched paths must fall back to
+      # index.html, or a refresh on a deep link 404s.
+      - type: rewrite
+        source: /*
+        destination: /index.html
