@@ -49,9 +49,11 @@ The API starts on **http://localhost:3000**.
 
 Environment variables (see `.env.example`):
 
-| Variable      | Description                        |
-| ------------- | ---------------------------------- |
-| `MONGODB_URI` | MongoDB connection string          |
+| Variable      | Description                                                        |
+| ------------- | ------------------------------------------------------------------ |
+| `MONGODB_URI` | MongoDB connection string (required)                               |
+| `PORT`        | Port to listen on. Defaults to `3000`; hosts set this themselves.  |
+| `CORS_ORIGIN` | Allowed browser origin(s), comma-separated. Defaults to `*`.       |
 
 > `.env` is git-ignored — never commit real credentials.
 
@@ -64,6 +66,15 @@ npm start                 # ng serve
 ```
 
 The app is served on **http://localhost:4200** and expects the API at `http://localhost:3000`.
+
+The API base URL is not hardcoded in the services - it comes from the environment files:
+
+| File                               | Used by                        | Value                       |
+| ---------------------------------- | ------------------------------ | --------------------------- |
+| `src/environments/environment.ts`      | `ng serve` / dev build     | `http://localhost:3000/`    |
+| `src/environments/environment.prod.ts` | `ng build` (production)    | your deployed API URL       |
+
+> Update `apiUrl` in `environment.prod.ts` to point at your deployed API. It must end with a trailing slash.
 
 ## API endpoints
 
@@ -95,9 +106,67 @@ The app is served on **http://localhost:4200** and expects the API at `http://lo
 
 **Backend** (`blinkit-delivery-app-API/blinkit-clone-api`)
 
-| Command       | Description                  |
-| ------------- | ---------------------------- |
-| `npm run dev` | Start API with nodemon       |
+| Command       | Description                        |
+| ------------- | ---------------------------------- |
+| `npm start`   | Start API (production)             |
+| `npm run dev` | Start API with nodemon (development) |
+
+## Deployment
+
+The frontend and backend deploy as two separate services. Deploy the **API first** so you
+know its URL, then point the frontend at it.
+
+### 1. Database - MongoDB Atlas
+
+1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
+2. Under **Network Access**, allow `0.0.0.0/0` so your host can reach the cluster.
+3. Under **Database Access**, create a user and copy the connection string.
+
+### 2. API - Render
+
+The repo includes [`render.yaml`](render.yaml), so Render can configure the service for you.
+
+1. On [render.com](https://render.com), pick **New > Blueprint** and select this repo.
+2. Render reads `render.yaml` and creates the `blinkit-clone-api` web service.
+3. Add the environment variables when prompted:
+   - `MONGODB_URI` - your Atlas connection string
+   - `CORS_ORIGIN` - leave as `*` for now; set it to your frontend URL after step 3
+4. Deploy, then confirm `https://<your-api>.onrender.com/health` returns `{"status":"ok"}`.
+
+To set it up manually instead: **New > Web Service**, root directory
+`blinkit-delivery-app-API/blinkit-clone-api`, build `npm ci`, start `npm start`.
+
+> On Render's free tier the service sleeps after inactivity, so the first request
+> after an idle period takes ~30-60s to respond.
+
+### 3. Frontend - Netlify
+
+The repo includes [`netlify.toml`](netlify.toml) with the build settings and the SPA redirect.
+
+1. Edit `src/environments/environment.prod.ts` and set `apiUrl` to your Render URL
+   (with a trailing slash), then commit and push.
+2. On [netlify.com](https://netlify.com), choose **Add new site > Import an existing project**
+   and select this repo. Netlify picks up `netlify.toml` automatically.
+3. Deploy, then copy the site URL.
+
+### 4. Close the loop on CORS
+
+Back in Render, set `CORS_ORIGIN` to your Netlify URL (no trailing slash) and redeploy:
+
+```
+CORS_ORIGIN=https://your-site.netlify.app
+```
+
+This stops other sites from calling your API from the browser.
+
+### Deployment checklist
+
+- [ ] Atlas cluster created, network access allows your host
+- [ ] API deployed, `/health` returns `{"status":"ok","db":"connected"}`
+- [ ] `environment.prod.ts` points at the deployed API (trailing slash)
+- [ ] Frontend deployed and loading categories
+- [ ] `CORS_ORIGIN` set to the frontend URL
+- [ ] `.env` never committed
 
 ## License
 

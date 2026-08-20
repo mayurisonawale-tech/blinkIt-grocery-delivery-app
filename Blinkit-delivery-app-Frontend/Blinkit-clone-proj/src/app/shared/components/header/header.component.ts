@@ -73,4 +73,3 @@ export class HeaderComponent implements OnInit {
     this.userHelperService.handleUserLogout();
   }
 }
-}

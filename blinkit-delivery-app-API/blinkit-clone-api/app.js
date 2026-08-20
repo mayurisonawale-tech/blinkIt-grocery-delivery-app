@@ -8,12 +8,35 @@ const server = express();
 
 server.use(express.json());
 
+// Comma-separated list of allowed origins, or '*' for any.
+// e.g. CORS_ORIGIN=https://blinkit-clone.netlify.app
+const allowedOrigins = (process.env.CORS_ORIGIN || '*').split(',').map(o => o.trim());
+
 server.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    const requestOrigin = req.headers.origin;
+    if (allowedOrigins.includes('*')) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+    } else if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
+        res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+        res.setHeader('Vary', 'Origin');
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Browsers send a preflight OPTIONS request before a PUT/POST with a JSON body.
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
     next();
 })
+
+// Health check - used by hosting platforms to verify the service is up.
+server.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'ok',
+        db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    });
+});
 
 server.post('/admin/login',(req,res,next)=>{
   const userName = req.body?.userName;
@@ -301,10 +324,17 @@ server.get('/populated-cart-items/:userId',async (req,res,next)=>{
 
 })
 
+const PORT = process.env.PORT || 3000;
+
+if (!process.env.MONGODB_URI) {
+  console.error('MONGODB_URI is not set. Copy .env.example to .env and fill it in.');
+  process.exit(1);
+}
+
 mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log('Connected to MongoDB');
-  server.listen(3000, () => {
-    console.log(`Server is running on http://localhost:3000`);
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 }).catch((err) => {
   console.error('Failed to connect to MongoDB', err);

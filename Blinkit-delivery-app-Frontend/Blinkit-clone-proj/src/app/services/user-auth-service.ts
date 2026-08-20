@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { environment } from "../../environments/environment";
 
 
 
@@ -9,7 +10,7 @@ import { Injectable } from "@angular/core";
 
 export class UserAuthService {
 
-    private apiUrl = 'http://localhost:3000/';
+    private apiUrl = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 

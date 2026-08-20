@@ -1,0 +1,19 @@
+# Render blueprint for the Express API.
+# The frontend is deployed separately (see netlify.toml).
+
+services:
+  - type: web
+    name: blinkit-clone-api
+    runtime: node
+    plan: free
+    rootDir: blinkit-delivery-app-API/blinkit-clone-api
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      # Set these in the Render dashboard - never commit real values.
+      - key: MONGODB_URI
+        sync: false
+      # Your deployed frontend origin, e.g. https://blinkit-clone.netlify.app
+      - key: CORS_ORIGIN
+        sync: false

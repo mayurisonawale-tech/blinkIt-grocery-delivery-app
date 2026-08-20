@@ -1,0 +1,19 @@
+# Netlify configuration for the Angular frontend.
+# The API is deployed separately (see render.yaml).
+
+[build]
+  # Monorepo: build from the Angular project folder.
+  base = "Blinkit-delivery-app-Frontend/Blinkit-clone-proj"
+  command = "npm run build"
+  # Relative to `base`.
+  publish = "dist/blinkit-clone-proj"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Angular is a single-page app: every route must fall back to index.html,
+# otherwise a hard refresh on a deep link returns a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
