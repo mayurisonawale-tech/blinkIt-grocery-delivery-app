@@ -1,0 +1,115 @@
+<section class="hero">
+  <div class="hero__inner">
+
+    <div class="hero__copy">
+      <span class="pill">⚡ Delivered in as little as 10 minutes</span>
+
+      <h1 class="hero__title">
+        Shop groceries,
+        <span class="hero__title-accent">delivered to your door</span>
+      </h1>
+
+      <p class="hero__lede">
+        Fresh vegetables, fruit, dairy and daily essentials — thousands of products,
+        picked and packed from a store near you. Order in a tap, unpack in minutes.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" routerLink="/catalog/categories">Shop groceries</a>
+        <a class="btn btn--ghost" *ngIf="!isLoggedIn" routerLink="/user/register">Create an account</a>
+        <a class="btn btn--ghost" *ngIf="isLoggedIn" routerLink="/catalog/cart">View your cart</a>
+      </div>
+
+      <p class="notice" *ngIf="!isLoggedIn">
+        <span class="notice__icon">🔒</span>
+        <span>
+          Please <a routerLink="/user/login">log in</a> first to add items to your cart.
+          New here? <a routerLink="/user/register">Create an account</a> — it takes a minute.
+        </span>
+      </p>
+
+      <p class="notice notice--ok" *ngIf="isLoggedIn">
+        <span class="notice__icon">✅</span>
+        <span>You're logged in and ready to shop. Your cart is saved as you go.</span>
+      </p>
+    </div>
+
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__art-grid">
+        <span class="hero__art-tile">🥦</span>
+        <span class="hero__art-tile">🍓</span>
+        <span class="hero__art-tile">🥕</span>
+        <span class="hero__art-tile">🧀</span>
+        <span class="hero__art-tile">🍇</span>
+        <span class="hero__art-tile">🥚</span>
+        <span class="hero__art-tile">🍅</span>
+        <span class="hero__art-tile">🥑</span>
+        <span class="hero__art-tile">🍌</span>
+      </div>
+      <div class="hero__art-badge">
+        <strong>10 min</strong>
+        <small>average delivery</small>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <header class="section__head">
+    <h2 class="section__title">Shop by category</h2>
+    <p class="section__sub">Everything for the week, sorted the way you actually shop.</p>
+  </header>
+
+  <div class="cat-grid">
+    <a class="cat-card" *ngFor="let category of categories" routerLink="/catalog/categories">
+      <span class="cat-card__icon">{{ category.icon }}</span>
+      <span class="cat-card__label">{{ category.label }}</span>
+    </a>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <header class="section__head">
+    <h2 class="section__title">Why shop with us</h2>
+    <p class="section__sub">The boring stuff done properly, so you can get on with your day.</p>
+  </header>
+
+  <div class="feature-grid">
+    <article class="feature-card" *ngFor="let feature of features">
+      <span class="feature-card__icon">{{ feature.icon }}</span>
+      <h3 class="feature-card__title">{{ feature.title }}</h3>
+      <p class="feature-card__copy">{{ feature.copy }}</p>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <header class="section__head">
+    <h2 class="section__title">How it works</h2>
+  </header>
+
+  <ol class="steps">
+    <li class="step">
+      <span class="step__num">1</span>
+      <h3 class="step__title">Create an account</h3>
+      <p class="step__copy">Sign up with your name, mobile and delivery address.</p>
+    </li>
+    <li class="step">
+      <span class="step__num">2</span>
+      <h3 class="step__title">Fill your cart</h3>
+      <p class="step__copy">Browse categories and add what you need — your cart saves as you go.</p>
+    </li>
+    <li class="step">
+      <span class="step__num">3</span>
+      <h3 class="step__title">Get it delivered</h3>
+      <p class="step__copy">We pick, pack and bring it over. Usually before you've put the phone down.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="closer">
+  <h2 class="closer__title">Ready when you are</h2>
+  <p class="closer__copy">Start with today's essentials and build your usual list as you go.</p>
+  <a class="btn btn--primary btn--lg" routerLink="/catalog/categories">Start shopping</a>
+</section>

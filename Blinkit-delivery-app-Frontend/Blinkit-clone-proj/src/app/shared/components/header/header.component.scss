@@ -2,23 +2,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 20px;
     background-color: rgb(117, 233, 131);
-    height: 60px;
-    
+    min-height: 60px;
 
     .header-left-section{
         display: flex;
         align-items: center;
+        gap: 12px;
+        flex: 1 1 auto;
+        min-width: 0;
 
         .header-logo{
-            width: 100px;
+            flex-shrink: 0;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #12703b;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .header-search-bar{
+            flex: 1 1 auto;
+            min-width: 0;
+
             input{
-                width: 300px;
-                height: 30px;
+                /* Was a fixed 300px, which pushed the nav off-screen on phones. */
+                width: 100%;
+                max-width: 300px;
+                height: 34px;
                 border-radius: 5px;
                 border: 1px solid #ccc;
                 padding: 0 10px;
@@ -29,17 +43,39 @@
     .header-right-section{
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 8px 20px;
 
         .nav-item{
-            margin-left: 20px;
             cursor: pointer;
+            white-space: nowrap;
+            padding: 4px 2px;
+            border-radius: 4px;
+
+            &:hover{
+                text-decoration: underline;
+            }
         }
-         .highlight{
+
+        .highlight{
             font-weight: bold;
         }
-
-
-    
     }
-    
+}
+
+@media (max-width: 620px){
+    .main-header{
+        padding: 10px 14px;
+
+        .header-left-section{
+            flex: 1 1 100%;
+        }
+
+        .header-right-section{
+            flex: 1 1 100%;
+            justify-content: flex-start;
+            gap: 6px 14px;
+            font-size: 0.92rem;
+        }
+    }
 }
