@@ -16,5 +16,7 @@
             </div>
         </div>
         <button type="submit" class="userlogin-button"  [disabled]="userLoginForm.invalid">Login</button>
+        <p class="form-error" *ngIf="loginError">{{ loginError }}</p>
+        <p class="form-alt">New here? <a routerLink="/user/register" queryParamsHandling="preserve">Create an account</a></p>
     </form>
 </div>

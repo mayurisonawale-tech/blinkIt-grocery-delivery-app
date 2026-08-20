@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/data-service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserAuthService } from 'src/app/services/user-auth-service';
 import { UserHelperService } from 'src/app/services/user-helper.service';
 
@@ -17,32 +16,45 @@ export class UserLoginComponent implements OnInit {
     password:['',[Validators.required]]
   })
 
+  // Where the guard turned the visitor away from, if anywhere.
+  private returnUrl = '/catalog/categories';
 
-  constructor(private fb:FormBuilder, private userAuthService:UserAuthService, private router:Router,private userHelperService:UserHelperService) { }
+  loginError = '';
+
+  constructor(
+    private fb:FormBuilder,
+    private userAuthService:UserAuthService,
+    private router:Router,
+    private route:ActivatedRoute,
+    private userHelperService:UserHelperService
+  ) { }
 
   ngOnInit(): void {
+    const requested = this.route.snapshot.queryParamMap.get('returnUrl');
+    if (requested) {
+      this.returnUrl = requested;
+    }
   }
 
   userLoginSubmit():void{
-    console.log("submit button clicked");
     if(this.userLoginForm.valid){
       const {username,password} = this.userLoginForm.value;
       this.userAuthService.getUserLoginDetails(username,password).subscribe({
         next:(response:any)=>{
-          console.log("user login successful",response);
           localStorage.setItem('user',JSON.stringify(response.user));
           localStorage.removeItem('adminUser');
           this.userHelperService.userData = response.user;
           this.userHelperService.userLoginStatusBehaviorSubject.next(true);
 
-          this.router.navigate(['/catalog/categories']);
+          this.router.navigateByUrl(this.returnUrl);
         },
         error:(error)=>{
           console.log("user login failed",error);
+          this.loginError = error?.status === 401
+            ? 'Invalid username or password.'
+            : 'Could not sign you in. Please try again.';
         }
       });
     }
   }
 }
-
-

@@ -17,7 +17,8 @@ export class UserHelperService {
     localStorage.removeItem('user');
     this.userData = null;
     this.userLoginStatusBehaviorSubject.next(false);
-    this.router.navigate(['/catalog/categories']);
+    // The catalog is guarded now, so send signed-out users to the landing page.
+    this.router.navigate(['/']);
   }
 }  
 

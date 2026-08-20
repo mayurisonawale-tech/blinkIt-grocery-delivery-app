@@ -7,11 +7,14 @@ import { CartComponent } from './components/cart/cart.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AuthGuard } from '../services/auth.guard';
 
+// Shopping requires an account: the cart is keyed by user id, so a signed-out
+// visitor has nothing to add to.
 const displayRoutes = [
-  {path:'categories',component:CategoriesComponent},
-  {path:'products',component:ProductsComponent},
-  {path:'cart',component:CartComponent}
+  {path:'categories',component:CategoriesComponent, canActivate:[AuthGuard]},
+  {path:'products',component:ProductsComponent, canActivate:[AuthGuard]},
+  {path:'cart',component:CartComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({

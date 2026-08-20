@@ -37,5 +37,7 @@
     </div>
     </div>
     <button type="submit" class="user-register-button" [disabled]="userRegisterForm.invalid">Register</button>
+    <p class="form-error" *ngIf="registerError">{{ registerError }}</p>
+    <p class="form-alt">Already have an account? <a routerLink="/user/login" queryParamsHandling="preserve">Log in</a></p>
     </form>
 </div>

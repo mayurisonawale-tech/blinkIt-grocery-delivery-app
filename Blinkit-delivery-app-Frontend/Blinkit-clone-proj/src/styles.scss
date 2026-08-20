@@ -129,6 +129,33 @@ textarea.formControl {
   border-radius: 7px;
 }
 
+/* Server-side failure, e.g. wrong password. Distinct from .error, which
+   flags a single invalid field. */
+.form-error {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  text-align: center;
+  color: var(--c-danger);
+  background: var(--c-danger-tint);
+  border: 1px solid #f3c9c3;
+  border-radius: var(--radius-sm);
+}
+
+/* "New here? Create an account" style footer link. */
+.form-alt {
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--c-muted);
+
+  a {
+    color: var(--c-green-deep);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+}
+
 /* ------------------------------------------------------------ buttons
 
    The app uses a different class name per button; grouping them keeps
